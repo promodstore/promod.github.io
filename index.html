@@ -347,6 +347,10 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
+          <span id="syncStatusBadge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+            <span>Local Demo Mode</span>
+          </span>
           <button id="btnAdminLogout" type="button" class="hidden px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 border border-slate-200">
             Lock Portal
           </button>
@@ -509,6 +513,51 @@
   </div>
 
   <script>
+    // =========================================================================
+    // 0. FIREBASE CLOUD SYNC CONFIG (PASTE YOUR 6 VALUES FROM FIREBASE CONSOLE)
+    //    Leave as-is for Local Demo Mode. Once pasted, orders & catalog sync live!
+    // =========================================================================
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyAQc8qr2xX9T_X5akqeBelXMnnZHuWWuUo",
+      authDomain: "promod-store-e4956.firebaseapp.com",
+      projectId: "promod-store-e4956",
+      storageBucket: "promod-store-e4956.firebasestorage.app",
+      messagingSenderId: "3117703874",
+      appId: "1:3117703874:web:e1d947eff5e992a0ae515b",
+      measurementId: "G-RLN0TW0K2K"
+    };
+
+    function isFirebaseConfigured() {
+      return Boolean(
+        FIREBASE_CONFIG.apiKey &&
+        FIREBASE_CONFIG.projectId &&
+        !FIREBASE_CONFIG.apiKey.startsWith('PASTE_') &&
+        !FIREBASE_CONFIG.projectId.startsWith('PASTE_')
+      );
+    }
+
+    let db = null;
+    let useCloudSync = false;
+
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+
+    function updateSyncBadge(modeText, isLive) {
+      const badge = document.getElementById('syncStatusBadge');
+      if (!badge) return;
+      badge.className = isLive
+        ? 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200'
+        : 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200';
+      badge.innerHTML = `<span class="w-2 h-2 rounded-full ${isLive ? 'bg-emerald-500' : 'bg-amber-500'}"></span><span>${modeText}</span>`;
+    }
+
     // =========================================================================
     // 1. DATA & WORKFLOW STAGES
     // =========================================================================
@@ -1230,11 +1279,18 @@
         total: getCartTotal(),
         statusIndex: 0,
         note: 'Order received! Your custom build is in the queue and will start soon.',
-        updatedAt: formatTimeNow()
+        updatedAt: formatTimeNow(),
+        createdAt: Date.now()
       };
 
-      state.orders.unshift(newOrder);
-      saveStorage(ORDERS_KEY, state.orders);
+      if (useCloudSync && db) {
+        db.collection('orders').doc(newOrder.id).set(newOrder).catch(() => {
+          showToast('Cloud sync failed. Check Firestore rules.');
+        });
+      } else {
+        state.orders.unshift(newOrder);
+        saveStorage(ORDERS_KEY, state.orders);
+      }
 
       state.cart = [];
       state.trackQuery = newOrder.id;
@@ -1273,10 +1329,17 @@
         const newStage = Number(stageBtn.getAttribute('data-set-stage'));
         const order = state.orders.find(o => o.id === orderId);
         if (order) {
-          order.statusIndex = newStage;
-          order.updatedAt = formatTimeNow();
-          saveStorage(ORDERS_KEY, state.orders);
-          renderAll();
+          const updatedAt = formatTimeNow();
+          if (useCloudSync && db) {
+            db.collection('orders').doc(orderId).update({ statusIndex: newStage, updatedAt }).catch(() => {
+              showToast('Cloud update failed. Check Firestore rules.');
+            });
+          } else {
+            order.statusIndex = newStage;
+            order.updatedAt = updatedAt;
+            saveStorage(ORDERS_KEY, state.orders);
+            renderAll();
+          }
           showToast(`${orderId} updated to "${STAGES[newStage].label}"`);
         }
         return;
@@ -1288,10 +1351,18 @@
         const input = document.querySelector(`[data-note-input="${orderId}"]`);
         const order = state.orders.find(o => o.id === orderId);
         if (order && input) {
-          order.note = input.value.trim();
-          order.updatedAt = formatTimeNow();
-          saveStorage(ORDERS_KEY, state.orders);
-          renderAll();
+          const note = input.value.trim();
+          const updatedAt = formatTimeNow();
+          if (useCloudSync && db) {
+            db.collection('orders').doc(orderId).update({ note, updatedAt }).catch(() => {
+              showToast('Cloud note save failed. Check Firestore rules.');
+            });
+          } else {
+            order.note = note;
+            order.updatedAt = updatedAt;
+            saveStorage(ORDERS_KEY, state.orders);
+            renderAll();
+          }
           showToast(`Saved workshop note for ${orderId}`);
         }
       }
@@ -1316,10 +1387,16 @@
         description
       };
 
-      state.products.unshift(newProduct);
-      saveStorage(PRODUCTS_KEY, state.products);
+      if (useCloudSync && db) {
+        db.collection('products').doc(newProduct.id).set({ ...newProduct, createdAt: Date.now() }).catch(() => {
+          showToast('Failed to add product to cloud.');
+        });
+      } else {
+        state.products.unshift(newProduct);
+        saveStorage(PRODUCTS_KEY, state.products);
+        renderAll();
+      }
       e.target.reset();
-      renderAll();
       showToast(`Added "${name}" to storefront catalog!`);
     });
 
@@ -1328,15 +1405,76 @@
       const delBtn = e.target.closest('[data-delete-product]');
       if (!delBtn) return;
       const id = delBtn.getAttribute('data-delete-product');
-      state.products = state.products.filter(p => p.id !== id);
       state.cart = state.cart.filter(c => c.productId !== id);
-      saveStorage(PRODUCTS_KEY, state.products);
-      renderAll();
+      if (useCloudSync && db) {
+        db.collection('products').doc(id).delete().catch(() => {
+          showToast('Failed to remove product from cloud.');
+        });
+      } else {
+        state.products = state.products.filter(p => p.id !== id);
+        saveStorage(PRODUCTS_KEY, state.products);
+        renderAll();
+      }
       showToast('Product removed from catalog');
     });
 
-    // Initial render
+    // =========================================================================
+    // 6. INITIALIZE FIREBASE REAL-TIME SYNC (ONLY WHEN CONFIG IS PROVIDED)
+    // =========================================================================
+    async function initCloudSync() {
+      if (!isFirebaseConfigured()) {
+        updateSyncBadge('Local Demo Mode', false);
+        return;
+      }
+      try {
+        updateSyncBadge('Connecting Firebase...', false);
+        await loadScript('https://www.gstatic.com/firebasejs/13.4.0/firebase-app-compat.js');
+        await loadScript('https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore-compat.js');
+        if (!window.firebase.apps.length) {
+          window.firebase.initializeApp(FIREBASE_CONFIG);
+        }
+        db = window.firebase.firestore();
+        useCloudSync = true;
+        updateSyncBadge('Firebase Cloud Sync: Live', true);
+
+        // Live Products listener (auto-seeds default items if collection is empty)
+        db.collection('products').onSnapshot((snap) => {
+          if (snap.empty) {
+            DEFAULT_PRODUCTS.forEach((p, idx) => {
+              db.collection('products').doc(p.id).set({ ...p, createdAt: Date.now() - idx * 1000 }).catch(() => {});
+            });
+            return;
+          }
+          const list = [];
+          snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
+          list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          state.products = list;
+          renderAll();
+        }, () => {
+          useCloudSync = false;
+          updateSyncBadge('Check Firestore Rules (Local Fallback)', false);
+        });
+
+        // Live Orders listener
+        db.collection('orders').onSnapshot((snap) => {
+          const list = [];
+          snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
+          list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          state.orders = list;
+          renderAll();
+        }, () => {
+          useCloudSync = false;
+          updateSyncBadge('Check Firestore Rules (Local Fallback)', false);
+        });
+      } catch (err) {
+        useCloudSync = false;
+        updateSyncBadge('Local Demo Mode', false);
+      }
+    }
+
+    // Initial render & optional Firebase startup
     renderAll();
+    initCloudSync();
   </script>
 </body>
 </html>
