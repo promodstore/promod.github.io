@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Mods Store — Made-to-Order Lighting &amp; Live Order Tracking</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .step-line {
+      transition: background-color 0.25s ease;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased">
+
+  <!-- ==================== WEBSITE NAVBAR ==================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <!-- Brand Logo -->
+      <a href="#home" class="flex items-center gap-2.5 shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm">
+          <i data-lucide="zap" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="block text-base font-extrabold tracking-tight text-slate-900 leading-none">Custom Mods Store</span>
+          <span class="block text-[11px] font-medium text-slate-500 mt-0.5">Made-to-Order Retrofits</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600" aria-label="Main Navigation">
+        <a href="#home" class="hover:text-blue-600 transition-colors">Home</a>
+        <a href="#catalog" class="hover:text-blue-600 transition-colors">Catalog</a>
+        <a href="#how-it-works" class="hover:text-blue-600 transition-colors">How It Works</a>
+        <a href="#track-order" class="hover:text-blue-600 transition-colors">Track Order</a>
+        <a href="#contact" class="hover:text-blue-600 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Right Action Buttons -->
+      <div class="flex items-center gap-2">
+        <button id="btnOpenCart" type="button"
+          class="px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5">
+          <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+          <span>Cart</span>
+          <span id="cartCountBadge" class="px-1.5 py-0.5 text-[11px] rounded-full bg-blue-600 text-white font-bold">0</span>
+        </button>
+
+        <button id="btnOpenAdmin" type="button"
+          class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5">
+          <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Admin Portal</span>
+          <span class="sm:hidden">Admin</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="btnMobileMenu" type="button" class="md:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100" aria-label="Toggle Menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <div id="mobileNav" class="hidden md:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-2 text-sm font-medium text-slate-700">
+      <a href="#home" class="mobile-link block py-1.5 hover:text-blue-600">Home</a>
+      <a href="#catalog" class="mobile-link block py-1.5 hover:text-blue-600">Catalog</a>
+      <a href="#how-it-works" class="mobile-link block py-1.5 hover:text-blue-600">How It Works</a>
+      <a href="#track-order" class="mobile-link block py-1.5 hover:text-blue-600">Track Order</a>
+      <a href="#contact" class="mobile-link block py-1.5 hover:text-blue-600">Contact</a>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section id="home" class="bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+      <div class="max-w-2xl">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold mb-4">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <span>Custom-Built After You Order • Live Workshop Tracking</span>
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+          Custom Headlight Retrofits &amp; Plug-and-Play Lighting
+        </h1>
+        <p class="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed">
+          Browse our catalog, place your custom build order, and track every stage of your work live—from assembly and waterproofing to beam alignment and dispatch.
+        </p>
+
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="#catalog"
+            class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold shadow-lg shadow-blue-600/25 transition-all inline-flex items-center gap-2">
+            <span>Browse Catalog</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+          <a href="#track-order"
+            class="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white text-sm font-semibold transition-all inline-flex items-center gap-2">
+            <i data-lucide="radar" class="w-4 h-4"></i>
+            <span>Track My Order</span>
+          </a>
+        </div>
+
+        <!-- Trust Highlights -->
+        <div class="mt-10 pt-6 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs sm:text-sm text-slate-300">
+          <div class="flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+            <span>100% Plug-and-Play Couplers</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="crosshair" class="w-4 h-4 text-amber-400 shrink-0"></i>
+            <span>Wall Beam Alignment Tested</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="clock" class="w-4 h-4 text-blue-400 shrink-0"></i>
+            <span>Real-Time Workshop Updates</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PRODUCT CATALOG SECTION ==================== -->
+  <section id="catalog" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wider text-blue-600">Storefront</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Product Catalog</h2>
+        <p class="text-sm text-slate-600 mt-1">Select your custom lighting setup or wiring kit and order directly online.</p>
+      </div>
+      <p id="catalogCountLabel" class="text-xs sm:text-sm font-medium text-slate-500">Showing 4 products</p>
+    </div>
+
+    <!-- Search & Category Filters -->
+    <div class="bg-white rounded-2xl border border-slate-200 p-3.5 sm:p-4 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-xs">
+      <div class="relative flex-1 max-w-md">
+        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+        <input id="catalogSearch" type="text" placeholder="Search headlights, projectors, fog lights..."
+          class="w-full pl-9 pr-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+      <div id="categoryFilterBar" class="flex flex-wrap gap-1.5">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5">
+      <!-- Rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ==================== HOW IT WORKS SECTION ==================== -->
+  <section id="how-it-works" class="bg-white border-y border-slate-200 py-12 sm:py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-xl mx-auto mb-10">
+        <p class="text-xs font-bold uppercase tracking-wider text-blue-600">Made-to-Order Process</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">How Your Custom Order Works</h2>
+        <p class="text-sm text-slate-600 mt-2">Every item is built specifically for your vehicle and tested before delivery.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm mb-3">1</div>
+          <h3 class="text-base font-bold text-slate-900">Place Your Order</h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1.5">Choose products from the catalog, add your vehicle model and preferences, and get an Order ID.</p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm mb-3">2</div>
+          <h3 class="text-base font-bold text-slate-900">Custom Build Starts</h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1.5">Our workshop starts mounting, wiring, and waterproofing your custom setup.</p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm mb-3">3</div>
+          <h3 class="text-base font-bold text-slate-900">Testing &amp; Alignment</h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1.5">We verify low/high beam cutoff, wiring safety, and moisture sealing before packing.</p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+          <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3">4</div>
+          <h3 class="text-base font-bold text-slate-900">Ready / Dispatched</h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1.5">Your status updates live when your order is ready for workshop pickup or courier shipping.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LIVE ORDER TRACKER SECTION ==================== -->
+  <section id="track-order" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-wider text-blue-600">Live Workshop Status</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Track Your Order</h2>
+        <p class="text-sm text-slate-600 mt-1">Search by Order ID or phone number to see live build progress and workshop notes.</p>
+      </div>
+      <button id="btnTrackOpenAdmin" type="button"
+        class="text-xs sm:text-sm font-semibold text-blue-700 hover:text-blue-900 underline underline-offset-2 self-start sm:self-auto">
+        Shop Owner? Update Status in Admin Portal →
+      </button>
+    </div>
+
+    <!-- Track Search Box -->
+    <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 mb-6 shadow-xs">
+      <div class="flex flex-col sm:flex-row gap-3">
+        <div class="relative flex-1">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          <input id="trackSearchInput" type="text" placeholder="Enter Order ID (e.g., ORD-101) or Phone Number..."
+            class="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <button id="btnClearTrackSearch" type="button"
+          class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold shrink-0">
+          Show All Orders
+        </button>
+      </div>
+      <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+        <span>Quick test:</span>
+        <button type="button" data-quick-track="ORD-101" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-blue-50 hover:text-blue-700 font-semibold text-slate-700 transition-colors">ORD-101</button>
+        <button type="button" data-quick-track="ORD-102" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-blue-50 hover:text-blue-700 font-semibold text-slate-700 transition-colors">ORD-102</button>
+      </div>
+    </div>
+
+    <!-- Tracked Orders List -->
+    <div id="customerOrdersList" class="space-y-4">
+      <!-- Rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ==================== WEBSITE FOOTER ==================== -->
+  <footer id="contact" class="bg-slate-950 text-slate-300 border-t border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 sm:grid-cols-3 gap-8 text-sm">
+      <div>
+        <div class="flex items-center gap-2 text-white font-bold text-base mb-2">
+          <i data-lucide="zap" class="w-4 h-4 text-blue-400"></i>
+          <span>Custom Mods Store</span>
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Custom vehicle headlight retrofits, projectors, fog lights, and plug-and-play couplers built to order with transparent live progress tracking.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-white font-semibold mb-2.5">Quick Links</h3>
+        <ul class="space-y-1.5 text-xs text-slate-400">
+          <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+          <li><a href="#catalog" class="hover:text-white transition-colors">Product Catalog</a></li>
+          <li><a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a></li>
+          <li><a href="#track-order" class="hover:text-white transition-colors">Track Your Order</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-white font-semibold mb-2.5">Workshop &amp; Admin</h3>
+        <p class="text-xs text-slate-400">Mon – Sat: 10:00 AM – 7:00 PM</p>
+        <p class="text-xs text-slate-400 mt-1">Pan-India Courier &amp; Workshop Pickup Available</p>
+        <button id="btnFooterAdmin" type="button"
+          class="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white transition-colors">
+          <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
+          <span>Open Admin Workshop Portal</span>
+        </button>
+      </div>
+    </div>
+    <div class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
+      © 2026 Custom Mods Store. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- ==================== CART & CHECKOUT MODAL ==================== -->
+  <div id="cartModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
+      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between shrink-0">
+        <div>
+          <h3 class="text-base font-bold text-slate-900">Your Cart &amp; Checkout</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Review your items and enter your custom build details.</p>
+        </div>
+        <button id="btnCloseCart" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100" aria-label="Close">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-5">
+        <div id="cartItemsContainer" class="space-y-2.5">
+          <!-- Rendered by JS -->
+        </div>
+
+        <form id="checkoutForm" class="space-y-3.5 pt-3 border-t border-slate-200">
+          <h4 class="text-sm font-bold text-slate-900">Customer &amp; Custom Order Details</h4>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="inputCustomerName" class="block text-xs font-semibold text-slate-700 mb-1">Full Name *</label>
+              <input id="inputCustomerName" type="text" required placeholder="e.g., Rahul Verma"
+                class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <div>
+              <label for="inputCustomerPhone" class="block text-xs font-semibold text-slate-700 mb-1">Phone / WhatsApp *</label>
+              <input id="inputCustomerPhone" type="tel" required placeholder="e.g., 9876543210"
+                class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+          </div>
+
+          <div>
+            <label for="inputVehicleModel" class="block text-xs font-semibold text-slate-700 mb-1">Vehicle Model / Custom Requirement *</label>
+            <input id="inputVehicleModel" type="text" required placeholder="e.g., Honda SP 125 — Warm white low beam + red DRL"
+              class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <div>
+            <label for="inputAddress" class="block text-xs font-semibold text-slate-700 mb-1">Delivery Address or Workshop Pickup *</label>
+            <input id="inputAddress" type="text" required placeholder="e.g., Gorakhpur City / Workshop Pickup"
+              class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+
+          <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200 flex items-center justify-between">
+            <span class="text-sm font-medium text-slate-600">Order Total:</span>
+            <span id="cartTotalDisplay" class="font-bold text-slate-900 text-lg">₹0</span>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-1">
+            <button id="btnCancelCart" type="button"
+              class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100">
+              Continue Shopping
+            </button>
+            <button id="btnSubmitOrder" type="submit"
+              class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 shadow-sm disabled:opacity-50">
+              Place Order
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ADMIN WORKSHOP PORTAL MODAL ==================== -->
+  <div id="adminModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-xs p-3 sm:p-6">
+    <div class="bg-slate-50 rounded-2xl shadow-2xl max-w-5xl w-full max-h-[92vh] flex flex-col overflow-hidden border border-slate-200">
+      <!-- Admin Header -->
+      <div class="bg-white px-5 py-4 border-b border-slate-200 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900">Admin Workshop Portal</h3>
+            <p class="text-xs text-slate-500">Manage customer orders, live work updates, and website catalog</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnAdminLogout" type="button" class="hidden px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 border border-slate-200">
+            Lock Portal
+          </button>
+          <button id="btnCloseAdmin" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100" aria-label="Close Admin Portal">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Admin Content Area -->
+      <div class="p-5 overflow-y-auto flex-1">
+        <!-- Admin Login Gate -->
+        <div id="adminLoginGate" class="max-w-sm mx-auto my-8 bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
+          <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
+            <i data-lucide="lock" class="w-6 h-6"></i>
+          </div>
+          <h4 class="text-base font-bold text-slate-900">Workshop Admin Sign In</h4>
+          <p class="text-xs text-slate-500 mt-1">Enter your admin passcode to update orders and manage the catalog.</p>
+
+          <form id="adminLoginForm" class="mt-4 space-y-3">
+            <div>
+              <label for="adminPassInput" class="block text-xs font-semibold text-slate-700 mb-1">Admin Passcode</label>
+              <input id="adminPassInput" type="password" required placeholder="Enter passcode..."
+                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <p class="text-[11px] text-slate-500 mt-1.5">Demo passcode: <span class="font-bold text-slate-700">admin123</span></p>
+            </div>
+            <p id="adminLoginError" class="hidden text-xs font-semibold text-red-600">Incorrect passcode. Try "admin123".</p>
+            <button type="submit"
+              class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold transition-colors">
+              Unlock Admin Portal
+            </button>
+          </form>
+        </div>
+
+        <!-- Admin Dashboard (Unlocked) -->
+        <div id="adminDashboard" class="hidden space-y-5">
+          <!-- Admin Sub-Tabs -->
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="inline-flex gap-2">
+              <button id="tabAdminOrders" type="button"
+                class="px-4 py-2 rounded-xl text-sm font-semibold bg-slate-900 text-white shadow-sm transition-all flex items-center gap-2">
+                <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                <span>Manage Orders</span>
+                <span id="adminOrderBadge" class="px-1.5 py-0.5 text-xs rounded-full bg-amber-400 text-slate-950 font-bold">2</span>
+              </button>
+              <button id="tabAdminCatalog" type="button"
+                class="px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all flex items-center gap-2">
+                <i data-lucide="plus-square" class="w-4 h-4"></i>
+                <span>Manage Catalog</span>
+                <span id="adminProductCount" class="px-1.5 py-0.5 text-xs rounded-full bg-slate-100 text-slate-700 font-bold">4</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ADMIN TAB 1: ORDERS -->
+          <div id="adminOrdersSection" class="space-y-5">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="bg-white rounded-xl border border-slate-200 p-3.5">
+                <p class="text-xs text-slate-500 font-medium">Total Orders</p>
+                <p id="statTotal" class="text-2xl font-bold text-slate-900 mt-1">0</p>
+              </div>
+              <div class="bg-white rounded-xl border border-slate-200 p-3.5">
+                <p class="text-xs text-slate-500 font-medium">Order Received</p>
+                <p id="statPending" class="text-2xl font-bold text-amber-600 mt-1">0</p>
+              </div>
+              <div class="bg-white rounded-xl border border-slate-200 p-3.5">
+                <p class="text-xs text-slate-500 font-medium">In Progress / Testing</p>
+                <p id="statInProgress" class="text-2xl font-bold text-blue-600 mt-1">0</p>
+              </div>
+              <div class="bg-white rounded-xl border border-slate-200 p-3.5">
+                <p class="text-xs text-slate-500 font-medium">Ready / Dispatched</p>
+                <p id="statReady" class="text-2xl font-bold text-emerald-600 mt-1">0</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h4 class="text-sm sm:text-base font-bold text-slate-900">Active Customer Orders</h4>
+              <div class="flex flex-wrap gap-1.5" id="adminFilterBar">
+                <button type="button" data-filter="all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white">All</button>
+                <button type="button" data-filter="0" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">Order Received</button>
+                <button type="button" data-filter="1" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">Work in Progress</button>
+                <button type="button" data-filter="2" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">Testing</button>
+                <button type="button" data-filter="3" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">Ready / Dispatched</button>
+              </div>
+            </div>
+
+            <div id="adminOrdersList" class="space-y-4">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- ADMIN TAB 2: CATALOG -->
+          <div id="adminCatalogSection" class="hidden space-y-5">
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+              <h4 class="text-base font-bold text-slate-900 mb-1">Add New Product to Website Catalog</h4>
+              <p class="text-xs text-slate-500 mb-4">Products added here appear immediately on the main storefront.</p>
+
+              <form id="addProductForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label for="newProdName" class="block text-xs font-semibold text-slate-700 mb-1">Product Name *</label>
+                  <input id="newProdName" type="text" required placeholder="e.g., 7-Inch Round LED Headlight"
+                    class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+
+                <div>
+                  <label for="newProdCategory" class="block text-xs font-semibold text-slate-700 mb-1">Category *</label>
+                  <select id="newProdCategory"
+                    class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="Headlight Retrofit">Headlight Retrofit</option>
+                    <option value="Projectors">Projectors</option>
+                    <option value="Fog Lights">Fog Lights</option>
+                    <option value="Wiring &amp; Couplers">Wiring &amp; Couplers</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="newProdPrice" class="block text-xs font-semibold text-slate-700 mb-1">Price (₹) *</label>
+                  <input id="newProdPrice" type="number" min="50" required placeholder="e.g., 2499"
+                    class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+
+                <div>
+                  <label for="newProdBuildTime" class="block text-xs font-semibold text-slate-700 mb-1">Estimated Build Time *</label>
+                  <input id="newProdBuildTime" type="text" required placeholder="e.g., Ready in 2-3 days"
+                    class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+
+                <div class="sm:col-span-2">
+                  <label for="newProdDesc" class="block text-xs font-semibold text-slate-700 mb-1">Short Description *</label>
+                  <input id="newProdDesc" type="text" required placeholder="e.g., Plug-and-play custom fitting with dual-beam DRL and waterproofing."
+                    class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+
+                <div class="sm:col-span-2 flex justify-end">
+                  <button type="submit"
+                    class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow-sm flex items-center gap-2">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span>Add to Catalog</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+              <h4 class="text-sm font-bold text-slate-900 mb-3">Current Storefront Products</h4>
+              <div id="adminCatalogList" class="divide-y divide-slate-100">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden items-center gap-2 bg-slate-900 text-white text-sm font-medium px-4 py-3 rounded-xl shadow-lg">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+    <span id="toastMessage"></span>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. DATA & WORKFLOW STAGES
+    // =========================================================================
+    const STAGES = [
+      { label: 'Order Received', short: 'Received', icon: 'clipboard-list' },
+      { label: 'Work in Progress', short: 'Making', icon: 'hammer' },
+      { label: 'Testing & Alignment', short: 'Testing', icon: 'zap' },
+      { label: 'Ready / Dispatched', short: 'Ready', icon: 'check-circle' }
+    ];
+
+    const CATEGORY_STYLES = {
+      'Headlight Retrofit': { icon: 'sun', bg: 'from-blue-600 to-indigo-700' },
+      'Projectors': { icon: 'sparkles', bg: 'from-amber-500 to-orange-600' },
+      'Fog Lights': { icon: 'flashlight', bg: 'from-emerald-500 to-teal-700' },
+      'Wiring & Couplers': { icon: 'cable', bg: 'from-slate-700 to-slate-900' }
+    };
+
+    const DEFAULT_PRODUCTS = [
+      {
+        id: 'p1',
+        name: 'Custom H4 Projector Headlight Assembly',
+        category: 'Headlight Retrofit',
+        price: 3499,
+        buildTime: 'Ready in 2-3 days',
+        description: 'Plug-and-play custom fitting for your bike or scooter with high-low beam shutter and full waterproofing.'
+      },
+      {
+        id: 'p2',
+        name: '2.5-Inch Tri-Color Retrofit Projector',
+        category: 'Projectors',
+        price: 4299,
+        buildTime: 'Ready in 3-4 days',
+        description: 'White, Yellow, and Warm White modes with custom shroud mounting and wall beam alignment.'
+      },
+      {
+        id: 'p3',
+        name: 'Mini Dual-Color Fog Light Kit',
+        category: 'Fog Lights',
+        price: 1850,
+        buildTime: 'Ready in 1-2 days',
+        description: 'Includes handlebar switch and pre-wired waterproof connectors ready to bolt on.'
+      },
+      {
+        id: 'p4',
+        name: 'Plug-and-Play Relay Wiring Harness & Coupler',
+        category: 'Wiring & Couplers',
+        price: 650,
+        buildTime: 'Ready in 1 day',
+        description: 'Custom-made coupler and split-relay harness for safe installation without cutting OEM wires.'
+      }
+    ];
+
+    const DEFAULT_ORDERS = [
+      {
+        id: 'ORD-101',
+        customerName: 'Amit Sharma',
+        customerPhone: '9876501234',
+        vehicleModel: 'Honda SP 125',
+        address: 'Gorakhpur Workshop Pickup',
+        items: [{ productId: 'p1', name: 'Custom H4 Projector Headlight Assembly', qty: 1, price: 3499 }],
+        total: 3499,
+        statusIndex: 1,
+        note: 'Projector mounting is done. Waterproof sealing is currently in progress.',
+        updatedAt: 'Today, 10:45 AM'
+      },
+      {
+        id: 'ORD-102',
+        customerName: 'Vikas Yadav',
+        customerPhone: '9876505678',
+        vehicleModel: 'Royal Enfield Classic 350',
+        address: 'Lucknow (Courier Dispatch)',
+        items: [{ productId: 'p2', name: '2.5-Inch Tri-Color Retrofit Projector', qty: 1, price: 4299 }],
+        total: 4299,
+        statusIndex: 2,
+        note: 'Wall beam alignment and high-beam cutoff testing are underway.',
+        updatedAt: 'Today, 11:15 AM'
+      }
+    ];
+
+    // =========================================================================
+    // 2. STATE & STORAGE
+    // =========================================================================
+    const ORDERS_KEY = 'custom_mods_web_orders_v1';
+    const PRODUCTS_KEY = 'custom_mods_web_products_v1';
+
+    function loadStorage(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {
+        // Ignore storage errors
+      }
+      return JSON.parse(JSON.stringify(fallback));
+    }
+
+    function saveStorage(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (e) {
+        // Ignore storage errors
+      }
+    }
+
+    const state = {
+      searchQuery: '',
+      selectedCategory: 'All',
+      trackQuery: '',
+      adminUnlocked: false,
+      adminTab: 'orders',
+      adminFilter: 'all',
+      products: loadStorage(PRODUCTS_KEY, DEFAULT_PRODUCTS),
+      orders: loadStorage(ORDERS_KEY, DEFAULT_ORDERS),
+      cart: []
+    };
+
+    // =========================================================================
+    // 3. HELPERS
+    // =========================================================================
+    function formatTimeNow() {
+      const now = new Date();
+      let hours = now.getHours();
+      const mins = String(now.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      return `Today, ${hours}:${mins} ${ampm}`;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMessage').textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 2800);
+    }
+
+    function getStatusBadgeClasses(index) {
+      if (index === 0) return 'bg-amber-100 text-amber-800 border-amber-200';
+      if (index === 1) return 'bg-blue-100 text-blue-800 border-blue-200';
+      if (index === 2) return 'bg-indigo-100 text-indigo-800 border-indigo-200';
+      return 'bg-emerald-100 text-emerald-800 border-emerald-200';
+    }
+
+    function getCartItemCount() {
+      return state.cart.reduce((sum, item) => sum + item.qty, 0);
+    }
+
+    function getCartTotal() {
+      return state.cart.reduce((sum, item) => {
+        const prod = state.products.find(p => p.id === item.productId);
+        return sum + (prod ? prod.price * item.qty : 0);
+      }, 0);
+    }
+
+    function addToCart(productId, openAfter = false) {
+      const existing = state.cart.find(c => c.productId === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        state.cart.push({ productId, qty: 1 });
+      }
+      renderAll();
+      if (openAfter) {
+        openCartModal();
+      } else {
+        const prod = state.products.find(p => p.id === productId);
+        showToast(`Added "${prod ? prod.name : 'Item'}" to cart`);
+      }
+    }
+
+    function formatOrderItemsSummary(order) {
+      if (Array.isArray(order.items) && order.items.length > 0) {
+        return order.items.map(i => `${i.name}${i.qty > 1 ? ` × ${i.qty}` : ''}`).join(', ');
+      }
+      return order.productName || 'Custom Order';
+    }
+
+    // =========================================================================
+    // 4. RENDER FUNCTIONS
+    // =========================================================================
+    function renderCategoryFilters() {
+      const categories = ['All', ...Object.keys(CATEGORY_STYLES)];
+      const bar = document.getElementById('categoryFilterBar');
+      bar.innerHTML = categories.map(cat => {
+        const active = state.selectedCategory === cat;
+        return `
+          <button type="button" data-category="${escapeHtml(cat)}"
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              active
+                ? 'bg-blue-600 text-white shadow-xs'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+            }">
+            ${escapeHtml(cat)}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderProductCatalog() {
+      const grid = document.getElementById('productGrid');
+      const query = state.searchQuery.trim().toLowerCase();
+
+      const filtered = state.products.filter(p => {
+        const matchCat = state.selectedCategory === 'All' || p.category === state.selectedCategory;
+        const matchSearch = !query ||
+          p.name.toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query) ||
+          p.description.toLowerCase().includes(query);
+        return matchCat && matchSearch;
+      });
+
+      document.getElementById('catalogCountLabel').textContent =
+        `Showing ${filtered.length} ${filtered.length === 1 ? 'product' : 'products'}`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="sm:col-span-2 bg-white rounded-2xl border border-slate-200 p-8 text-center text-sm text-slate-500">
+            No products match your search. Try another keyword or select "All".
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => {
+        const style = CATEGORY_STYLES[p.category] || { icon: 'package', bg: 'from-blue-600 to-indigo-700' };
+        return `
+          <article class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition-shadow flex flex-col">
+            <div class="h-24 bg-gradient-to-br ${style.bg} p-4 flex items-end justify-between text-white">
+              <span class="text-[11px] font-semibold uppercase tracking-wide bg-white/20 backdrop-blur-xs px-2.5 py-1 rounded-full">
+                ${escapeHtml(p.category)}
+              </span>
+              <div class="w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center">
+                <i data-lucide="${style.icon}" class="w-5 h-5 text-white"></i>
+              </div>
+            </div>
+
+            <div class="p-5 flex-1 flex flex-col">
+              <h3 class="text-base font-bold text-slate-900 leading-snug">${escapeHtml(p.name)}</h3>
+              <p class="text-xs sm:text-sm text-slate-600 mt-1.5 flex-1">${escapeHtml(p.description)}</p>
+
+              <div class="mt-4 pt-3.5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p class="text-lg font-extrabold text-slate-900">₹${Number(p.price).toLocaleString('en-IN')}</p>
+                  <p class="text-xs text-slate-500 flex items-center gap-1">
+                    <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                    ${escapeHtml(p.buildTime)}
+                  </p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" data-add-cart="${escapeHtml(p.id)}"
+                    class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-semibold transition-colors">
+                    + Cart
+                  </button>
+                  <button type="button" data-quick-order="${escapeHtml(p.id)}"
+                    class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors">
+                    Order Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderProgressBar(statusIndex) {
+      return `
+        <div class="mt-4">
+          <div class="grid grid-cols-4 gap-1.5 sm:gap-2">
+            ${STAGES.map((stage, idx) => {
+              const done = idx <= statusIndex;
+              const isCurrent = idx === statusIndex;
+              return `
+                <div class="flex flex-col items-center text-center">
+                  <div class="w-full h-1.5 rounded-full mb-2 step-line ${done ? 'bg-blue-600' : 'bg-slate-200'}"></div>
+                  <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border ${
+                    isCurrent
+                      ? 'bg-blue-600 text-white border-blue-600 ring-4 ring-blue-100'
+                      : done
+                        ? 'bg-blue-50 text-blue-700 border-blue-200'
+                        : 'bg-slate-50 text-slate-400 border-slate-200'
+                  }">
+                    ${idx + 1}
+                  </div>
+                  <span class="mt-1.5 text-[11px] sm:text-xs font-medium ${done ? 'text-slate-900' : 'text-slate-400'}">
+                    ${stage.label}
+                  </span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTrackedOrders() {
+      const container = document.getElementById('customerOrdersList');
+      const q = state.trackQuery.trim().toLowerCase();
+
+      const matched = state.orders.filter(o => {
+        if (!q) return true;
+        return o.id.toLowerCase().includes(q) ||
+          (o.customerPhone && o.customerPhone.toLowerCase().includes(q)) ||
+          o.customerName.toLowerCase().includes(q);
+      });
+
+      if (matched.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white rounded-2xl border border-slate-200 p-8 text-center text-sm text-slate-500">
+            No order found for "${escapeHtml(state.trackQuery)}". Check your Order ID or phone number and try again.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = matched.map(order => {
+        const stage = STAGES[order.statusIndex] || STAGES[0];
+        const totalAmt = Number(order.total ?? order.price ?? 0);
+        return `
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-xs font-bold px-2.5 py-0.5 rounded-md bg-slate-900 text-white">${escapeHtml(order.id)}</span>
+                  <span class="text-xs text-slate-500">Last updated: ${escapeHtml(order.updatedAt)}</span>
+                </div>
+                <h3 class="text-base font-bold text-slate-900 mt-1.5">${escapeHtml(formatOrderItemsSummary(order))}</h3>
+                <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+                  Customer: <span class="font-semibold text-slate-800">${escapeHtml(order.customerName)}</span>
+                  • Build Detail: <span class="font-medium text-slate-800">${escapeHtml(order.vehicleModel)}</span>
+                </p>
+              </div>
+              <div class="text-right">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${getStatusBadgeClasses(order.statusIndex)}">
+                  ${stage.label}
+                </span>
+                <p class="text-sm font-bold text-slate-900 mt-1.5">₹${totalAmt.toLocaleString('en-IN')}</p>
+              </div>
+            </div>
+
+            ${renderProgressBar(order.statusIndex)}
+
+            <div class="mt-4 bg-slate-50 rounded-xl px-3.5 py-2.5 border border-slate-200 flex items-start gap-2">
+              <i data-lucide="message-square-text" class="w-4 h-4 text-blue-600 shrink-0 mt-0.5"></i>
+              <p class="text-xs sm:text-sm text-slate-700">
+                <span class="font-semibold text-slate-900">Workshop Update:</span>
+                ${escapeHtml(order.note || 'Order confirmed. Work will begin shortly.')}
+              </p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAdminPortal() {
+      document.getElementById('adminLoginGate').classList.toggle('hidden', state.adminUnlocked);
+      document.getElementById('adminDashboard').classList.toggle('hidden', !state.adminUnlocked);
+      document.getElementById('btnAdminLogout').classList.toggle('hidden', !state.adminUnlocked);
+
+      document.getElementById('adminOrderBadge').textContent = state.orders.length;
+      document.getElementById('adminProductCount').textContent = state.products.length;
+
+      const isAdminOrders = state.adminTab === 'orders';
+      document.getElementById('adminOrdersSection').classList.toggle('hidden', !isAdminOrders);
+      document.getElementById('adminCatalogSection').classList.toggle('hidden', isAdminOrders);
+
+      document.getElementById('tabAdminOrders').className = isAdminOrders
+        ? 'px-4 py-2 rounded-xl text-sm font-semibold bg-slate-900 text-white shadow-sm transition-all flex items-center gap-2'
+        : 'px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all flex items-center gap-2';
+      document.getElementById('tabAdminCatalog').className = !isAdminOrders
+        ? 'px-4 py-2 rounded-xl text-sm font-semibold bg-slate-900 text-white shadow-sm transition-all flex items-center gap-2'
+        : 'px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 transition-all flex items-center gap-2';
+
+      // Stats
+      document.getElementById('statTotal').textContent = state.orders.length;
+      document.getElementById('statPending').textContent = state.orders.filter(o => o.statusIndex === 0).length;
+      document.getElementById('statInProgress').textContent = state.orders.filter(o => o.statusIndex === 1 || o.statusIndex === 2).length;
+      document.getElementById('statReady').textContent = state.orders.filter(o => o.statusIndex === 3).length;
+
+      // Filter styles
+      document.querySelectorAll('#adminFilterBar .filter-btn').forEach(btn => {
+        const active = btn.getAttribute('data-filter') === state.adminFilter;
+        btn.className = active
+          ? 'filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white'
+          : 'filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50';
+      });
+
+      // Orders list
+      const filtered = state.adminFilter === 'all'
+        ? state.orders
+        : state.orders.filter(o => String(o.statusIndex) === state.adminFilter);
+
+      const ordersList = document.getElementById('adminOrdersList');
+      if (filtered.length === 0) {
+        ordersList.innerHTML = `<div class="bg-white rounded-2xl border border-slate-200 p-8 text-center text-sm text-slate-500">No orders in this filter.</div>`;
+      } else {
+        ordersList.innerHTML = filtered.map(order => {
+          const totalAmt = Number(order.total ?? order.price ?? 0);
+          return `
+            <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs space-y-4">
+              <div class="flex flex-wrap items-start justify-between gap-2">
+                <div>
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-xs font-bold px-2 py-0.5 rounded-md bg-slate-900 text-white">${escapeHtml(order.id)}</span>
+                    <span class="text-xs text-slate-500">${escapeHtml(order.updatedAt)}</span>
+                    ${order.customerPhone ? `<span class="text-xs text-slate-500">• ${escapeHtml(order.customerPhone)}</span>` : ''}
+                  </div>
+                  <h4 class="text-base font-bold text-slate-900 mt-1">
+                    ${escapeHtml(order.customerName)} — <span class="text-blue-700">${escapeHtml(order.vehicleModel)}</span>
+                  </h4>
+                  <p class="text-xs sm:text-sm text-slate-600">
+                    ${escapeHtml(formatOrderItemsSummary(order))} • ₹${totalAmt.toLocaleString('en-IN')}
+                  </p>
+                  ${order.address ? `<p class="text-xs text-slate-500 mt-0.5">Delivery: ${escapeHtml(order.address)}</p>` : ''}
+                </div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${getStatusBadgeClasses(order.statusIndex)}">
+                  ${STAGES[order.statusIndex].label}
+                </span>
+              </div>
+
+              <div>
+                <p class="text-xs font-semibold text-slate-500 mb-2">Update Work Stage (updates live on the website):</p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  ${STAGES.map((stage, idx) => `
+                    <button type="button" data-set-stage="${idx}" data-order-id="${escapeHtml(order.id)}"
+                      class="px-3 py-2 rounded-xl text-xs font-semibold border transition-all text-center ${
+                        order.statusIndex === idx
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                      }">
+                      ${idx + 1}. ${stage.label}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-2">
+                <input type="text" data-note-input="${escapeHtml(order.id)}" value="${escapeHtml(order.note)}"
+                  placeholder="Write a live update for the customer..."
+                  class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <button type="button" data-save-note="${escapeHtml(order.id)}"
+                  class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold shrink-0">
+                  Save Update
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Catalog list
+      const catList = document.getElementById('adminCatalogList');
+      if (state.products.length === 0) {
+        catList.innerHTML = `<p class="text-sm text-slate-500 py-4 text-center">No products in catalog yet.</p>`;
+      } else {
+        catList.innerHTML = state.products.map(p => `
+          <div class="py-3 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p class="text-sm font-bold text-slate-900">${escapeHtml(p.name)}</p>
+              <p class="text-xs text-slate-500">${escapeHtml(p.category)} • ₹${Number(p.price).toLocaleString('en-IN')} • ${escapeHtml(p.buildTime)}</p>
+            </div>
+            <button type="button" data-delete-product="${escapeHtml(p.id)}"
+              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors">
+              Remove
+            </button>
+          </div>
+        `).join('');
+      }
+    }
+
+    function renderCartModal() {
+      const container = document.getElementById('cartItemsContainer');
+      const totalDisplay = document.getElementById('cartTotalDisplay');
+      const submitBtn = document.getElementById('btnSubmitOrder');
+
+      if (state.cart.length === 0) {
+        container.innerHTML = `
+          <div class="bg-slate-50 rounded-xl border border-slate-200 p-5 text-center text-sm text-slate-500">
+            Your cart is empty. Pick a product from the catalog to place an order.
+          </div>
+        `;
+        totalDisplay.textContent = '₹0';
+        submitBtn.disabled = true;
+        return;
+      }
+
+      submitBtn.disabled = false;
+      container.innerHTML = state.cart.map(item => {
+        const prod = state.products.find(p => p.id === item.productId);
+        if (!prod) return '';
+        return `
+          <div class="flex items-center justify-between gap-3 bg-slate-50 rounded-xl p-3 border border-slate-200">
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-bold text-slate-900 truncate">${escapeHtml(prod.name)}</p>
+              <p class="text-xs text-slate-500">₹${Number(prod.price).toLocaleString('en-IN')} each</p>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button type="button" data-cart-dec="${escapeHtml(prod.id)}"
+                class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-100">-</button>
+              <span class="w-6 text-center text-sm font-bold">${item.qty}</span>
+              <button type="button" data-cart-inc="${escapeHtml(prod.id)}"
+                class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-100">+</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      totalDisplay.textContent = `₹${getCartTotal().toLocaleString('en-IN')}`;
+    }
+
+    function renderAll() {
+      document.getElementById('cartCountBadge').textContent = getCartItemCount();
+      renderCategoryFilters();
+      renderProductCatalog();
+      renderTrackedOrders();
+      renderAdminPortal();
+      renderCartModal();
+
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    }
+
+    // =========================================================================
+    // 5. MODAL & EVENT HANDLERS
+    // =========================================================================
+    function openCartModal() {
+      renderCartModal();
+      const modal = document.getElementById('cartModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeCartModal() {
+      const modal = document.getElementById('cartModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openAdminModal() {
+      renderAdminPortal();
+      const modal = document.getElementById('adminModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      if (!state.adminUnlocked) {
+        document.getElementById('adminPassInput').focus();
+      }
+    }
+
+    function closeAdminModal() {
+      const modal = document.getElementById('adminModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Mobile menu
+    document.getElementById('btnMobileMenu').addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.toggle('hidden');
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobileNav').classList.add('hidden');
+      });
+    });
+
+    // Cart modal triggers
+    document.getElementById('btnOpenCart').addEventListener('click', openCartModal);
+    document.getElementById('btnCloseCart').addEventListener('click', closeCartModal);
+    document.getElementById('btnCancelCart').addEventListener('click', closeCartModal);
+    document.getElementById('cartModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeCartModal();
+    });
+
+    // Admin modal triggers
+    document.getElementById('btnOpenAdmin').addEventListener('click', openAdminModal);
+    document.getElementById('btnTrackOpenAdmin').addEventListener('click', openAdminModal);
+    document.getElementById('btnFooterAdmin').addEventListener('click', openAdminModal);
+    document.getElementById('btnCloseAdmin').addEventListener('click', closeAdminModal);
+    document.getElementById('adminModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeAdminModal();
+    });
+
+    // Admin login / logout
+    document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pass = document.getElementById('adminPassInput').value.trim();
+      const err = document.getElementById('adminLoginError');
+      if (pass === 'admin123') {
+        state.adminUnlocked = true;
+        err.classList.add('hidden');
+        document.getElementById('adminPassInput').value = '';
+        renderAll();
+        showToast('Admin Workshop Portal unlocked');
+      } else {
+        err.classList.remove('hidden');
+      }
+    });
+
+    document.getElementById('btnAdminLogout').addEventListener('click', () => {
+      state.adminUnlocked = false;
+      renderAll();
+      showToast('Admin Portal locked');
+    });
+
+    // Catalog search & category filters
+    document.getElementById('catalogSearch').addEventListener('input', (e) => {
+      state.searchQuery = e.target.value;
+      renderProductCatalog();
+      if (window.lucide) window.lucide.createIcons();
+    });
+
+    document.getElementById('categoryFilterBar').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-category]');
+      if (!btn) return;
+      state.selectedCategory = btn.getAttribute('data-category');
+      renderAll();
+    });
+
+    // Catalog buttons
+    document.getElementById('productGrid').addEventListener('click', (e) => {
+      const addBtn = e.target.closest('[data-add-cart]');
+      if (addBtn) {
+        addToCart(addBtn.getAttribute('data-add-cart'), false);
+        return;
+      }
+      const quickBtn = e.target.closest('[data-quick-order]');
+      if (quickBtn) {
+        addToCart(quickBtn.getAttribute('data-quick-order'), true);
+      }
+    });
+
+    // Track order search & quick buttons
+    document.getElementById('trackSearchInput').addEventListener('input', (e) => {
+      state.trackQuery = e.target.value;
+      renderTrackedOrders();
+      if (window.lucide) window.lucide.createIcons();
+    });
+
+    document.getElementById('btnClearTrackSearch').addEventListener('click', () => {
+      state.trackQuery = '';
+      document.getElementById('trackSearchInput').value = '';
+      renderTrackedOrders();
+      if (window.lucide) window.lucide.createIcons();
+    });
+
+    document.querySelectorAll('[data-quick-track]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.getAttribute('data-quick-track');
+        state.trackQuery = val;
+        document.getElementById('trackSearchInput').value = val;
+        renderTrackedOrders();
+        if (window.lucide) window.lucide.createIcons();
+      });
+    });
+
+    // Cart quantity controls
+    document.getElementById('cartItemsContainer').addEventListener('click', (e) => {
+      const inc = e.target.closest('[data-cart-inc]');
+      if (inc) {
+        const id = inc.getAttribute('data-cart-inc');
+        const item = state.cart.find(c => c.productId === id);
+        if (item) item.qty += 1;
+        renderAll();
+        return;
+      }
+      const dec = e.target.closest('[data-cart-dec]');
+      if (dec) {
+        const id = dec.getAttribute('data-cart-dec');
+        const idx = state.cart.findIndex(c => c.productId === id);
+        if (idx !== -1) {
+          state.cart[idx].qty -= 1;
+          if (state.cart[idx].qty <= 0) state.cart.splice(idx, 1);
+        }
+        renderAll();
+      }
+    });
+
+    // Place order
+    document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (state.cart.length === 0) return;
+
+      const customerName = document.getElementById('inputCustomerName').value.trim();
+      const customerPhone = document.getElementById('inputCustomerPhone').value.trim();
+      const vehicleModel = document.getElementById('inputVehicleModel').value.trim();
+      const address = document.getElementById('inputAddress').value.trim();
+      if (!customerName || !customerPhone || !vehicleModel || !address) return;
+
+      const orderItems = state.cart
+        .map(c => {
+          const p = state.products.find(prod => prod.id === c.productId);
+          return p ? { productId: p.id, name: p.name, qty: c.qty, price: p.price } : null;
+        })
+        .filter(Boolean);
+
+      const nextNum = 101 + state.orders.length;
+      const newOrder = {
+        id: `ORD-${nextNum}`,
+        customerName,
+        customerPhone,
+        vehicleModel,
+        address,
+        items: orderItems,
+        total: getCartTotal(),
+        statusIndex: 0,
+        note: 'Order received! Your custom build is in the queue and will start soon.',
+        updatedAt: formatTimeNow()
+      };
+
+      state.orders.unshift(newOrder);
+      saveStorage(ORDERS_KEY, state.orders);
+
+      state.cart = [];
+      state.trackQuery = newOrder.id;
+      document.getElementById('trackSearchInput').value = newOrder.id;
+      e.target.reset();
+      closeCartModal();
+      renderAll();
+      showToast(`Order ${newOrder.id} placed! Tracking it below.`);
+      document.getElementById('track-order').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Admin sub-tabs
+    document.getElementById('tabAdminOrders').addEventListener('click', () => {
+      state.adminTab = 'orders';
+      renderAll();
+    });
+
+    document.getElementById('tabAdminCatalog').addEventListener('click', () => {
+      state.adminTab = 'catalog';
+      renderAll();
+    });
+
+    // Admin filters
+    document.getElementById('adminFilterBar').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-filter]');
+      if (!btn) return;
+      state.adminFilter = btn.getAttribute('data-filter');
+      renderAll();
+    });
+
+    // Admin order stage & note updates
+    document.getElementById('adminOrdersList').addEventListener('click', (e) => {
+      const stageBtn = e.target.closest('[data-set-stage]');
+      if (stageBtn) {
+        const orderId = stageBtn.getAttribute('data-order-id');
+        const newStage = Number(stageBtn.getAttribute('data-set-stage'));
+        const order = state.orders.find(o => o.id === orderId);
+        if (order) {
+          order.statusIndex = newStage;
+          order.updatedAt = formatTimeNow();
+          saveStorage(ORDERS_KEY, state.orders);
+          renderAll();
+          showToast(`${orderId} updated to "${STAGES[newStage].label}"`);
+        }
+        return;
+      }
+
+      const saveBtn = e.target.closest('[data-save-note]');
+      if (saveBtn) {
+        const orderId = saveBtn.getAttribute('data-save-note');
+        const input = document.querySelector(`[data-note-input="${orderId}"]`);
+        const order = state.orders.find(o => o.id === orderId);
+        if (order && input) {
+          order.note = input.value.trim();
+          order.updatedAt = formatTimeNow();
+          saveStorage(ORDERS_KEY, state.orders);
+          renderAll();
+          showToast(`Saved workshop note for ${orderId}`);
+        }
+      }
+    });
+
+    // Admin add product
+    document.getElementById('addProductForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('newProdName').value.trim();
+      const category = document.getElementById('newProdCategory').value;
+      const price = Number(document.getElementById('newProdPrice').value);
+      const buildTime = document.getElementById('newProdBuildTime').value.trim();
+      const description = document.getElementById('newProdDesc').value.trim();
+      if (!name || !price || !buildTime || !description) return;
+
+      const newProduct = {
+        id: 'p_' + Date.now(),
+        name,
+        category,
+        price,
+        buildTime,
+        description
+      };
+
+      state.products.unshift(newProduct);
+      saveStorage(PRODUCTS_KEY, state.products);
+      e.target.reset();
+      renderAll();
+      showToast(`Added "${name}" to storefront catalog!`);
+    });
+
+    // Admin delete product
+    document.getElementById('adminCatalogList').addEventListener('click', (e) => {
+      const delBtn = e.target.closest('[data-delete-product]');
+      if (!delBtn) return;
+      const id = delBtn.getAttribute('data-delete-product');
+      state.products = state.products.filter(p => p.id !== id);
+      state.cart = state.cart.filter(c => c.productId !== id);
+      saveStorage(PRODUCTS_KEY, state.products);
+      renderAll();
+      showToast('Product removed from catalog');
+    });
+
+    // Initial render
+    renderAll();
+  </script>
+</body>
+</html>
